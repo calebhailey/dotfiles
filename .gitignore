@@ -1,4 +1,6 @@
 .dotfiles/*
-.bash_secrets
+
+.profile.d/private/
+.profile.d/secrets/
+
 .netrc
-.gitconfig
