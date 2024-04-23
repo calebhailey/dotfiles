@@ -1,0 +1,4 @@
+.dotfiles/*
+.bash_secrets
+.netrc
+.gitconfig

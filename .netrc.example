@@ -1,0 +1,6 @@
+machine api.heroku.com
+  login heroku@calebhailey.com 
+  password xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+machine git.heroku.com
+  login heroku@calebhailey.com 
+  password xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 

@@ -1,0 +1,16 @@
+[user]
+	name = Caleb Hailey
+	email = github@calebhailey.com
+[core]
+	excludesfile = ~/.gitignore_global
+[credential]
+	helper = store
+[init]
+	defaultBranch = main
+[status]
+	showUntrackedFiles = no
+
+[url "git@github.com:calebhailey"]
+	insteadOf = :calebhailey
+[url "git@github.com:herdworks"]
+	insteadOf = :herdworks
