@@ -1,4 +1,5 @@
-# prompt
+# bash prompt
+# 
 case $(uname -s) in
   Darwin)
     HOSTNICKNAME=$(hostname | cut -d'.' -f1)

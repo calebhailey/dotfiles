@@ -1,3 +1,5 @@
+# SSH
+# 
 # aliases
 alias new-ssh-key="ssh-keygen -t rsa -b 4096 -C $1"
 if [ -n "$(uname -a | grep Darwin)" ]; then

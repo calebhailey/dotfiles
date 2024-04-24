@@ -20,7 +20,7 @@ fi;
 
 # load profile.d/private scripts
 if [ -d "${HOME}/.profile.d/private" ]; then
-    for FILE in "${HOME}/.profile.d/private"*; do 
+    for FILE in "${HOME}/.profile.d/private/"*; do 
         if [ -f "${FILE}" ]; then
             source ${FILE}
         fi
@@ -29,7 +29,7 @@ fi;
 
 # secrets
 if [ -d "${HOME}/.profile.d/secrets" ]; then
-    for FILE in "${HOME}/.profile.d/secrets"*; do 
+    for FILE in "${HOME}/.profile.d/secrets/"*; do 
         if [ -f "${FILE}" ]; then
             source ${FILE}
         fi

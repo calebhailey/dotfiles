@@ -4,3 +4,6 @@
 .profile.d/secrets/
 
 .netrc
+.aws/config
+.vault-token
+.wrangler
