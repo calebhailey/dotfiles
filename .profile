@@ -12,7 +12,7 @@
 if [ -d "${HOME}/.profile.d" ]; then
     for FILE in "${HOME}/.profile.d/"*; do 
         if [ -f "${FILE}" ]; then
-            echo "source $(basename ${FILE})"
+            echo "source \"$(basename ${FILE})\" added"
             source ${FILE}
         fi
     done

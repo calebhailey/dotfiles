@@ -12,9 +12,9 @@ for KEY in $(ls $HOME/.ssh/* 2> /dev/null)
 do
     if ( file $KEY | grep -iq "OpenSSH private" ); then 
         ssh-add $KEY &> /dev/null 
-        echo "Identity added: $(basename ${KEY})"
+        echo "identity \"$(basename ${KEY})\" added"
     elif ( file $KEY | grep -iq "PEM RSA" ); then
         ssh-add $KEY &> /dev/null
-        echo "Identity added: $(basename ${KEY})"
+        echo "identity \"$(basename ${KEY})\" added"
     fi
 done;
