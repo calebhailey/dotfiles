@@ -1,11 +1,12 @@
 # Ruby
 # 
 # installed rbenv via: git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# installed ruby-build via: git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 # the following is generated via: ~/.rbenv/bin/rbenv init - bash
-export PATH="/Users/calebhailey/.rbenv/bin:${PATH}"
-export PATH="/Users/calebhailey/.rbenv/shims:${PATH}"
+export PATH="${HOME}/.rbenv/bin:${PATH}"
+export PATH="${HOME}/.rbenv/shims:${PATH}"
 export RBENV_SHELL=bash
-source '/Users/calebhailey/.rbenv/completions/rbenv.bash'
+source '${HOME}/.rbenv/completions/rbenv.bash'
 command rbenv rehash 2>/dev/null
 rbenv() {
   local command
