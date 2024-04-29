@@ -3,6 +3,8 @@
 # installed rbenv via: git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 # installed ruby-build via: git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 
+# macos notes
+# 
 # LibYAML
 # 
 # installed libyaml 0.2.5 at /usr/local/libyaml
@@ -13,6 +15,10 @@
 # /usr/local/libyaml/lib/libyaml.la
 # 
 # build new rubies w/ RUBY_CONFIGURE_OPTS=--with-libyaml-dir=/usr/local/libyaml/ rbenv install x.x.x
+
+# linux notes
+# 
+# install dependency packages: libssl-dev libyaml-dev
 
 # Configure rbenv
 # the following is generated via: ~/.rbenv/bin/rbenv init - bash
