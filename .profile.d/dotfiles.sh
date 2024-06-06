@@ -3,7 +3,7 @@
 # reference: https://github.com/calebhailey/dotfiles
 
 # Alias
-alias dotfiles='/usr/bin/git --git-dir=/Users/calebhailey/.dotfiles --work-tree=/Users/calebhailey'
+alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles --work-tree=${HOME}/"
  
 # Assume unchanged
 # 
