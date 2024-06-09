@@ -1,9 +1,8 @@
-.dotfiles/*
-
 .profile.d/private/
 .profile.d/secrets/
 
 .netrc
-.aws/config
-.vault-token
-.wrangler
+.dotfiles*
+.aws*
+.vault*
+.wrangler*
