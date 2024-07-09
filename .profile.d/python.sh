@@ -6,3 +6,6 @@ if [ $(command -v python3) ]; then
     ln -Ffs ${HOME}/Library/Python .python
     PATH="${HOME}/.python/${PYTHON_VERSION}/bin:${PATH}"
 fi;
+if [ $(command -v python3) ] && [ ! $(command -v python) ]; then
+    alias python=python3
+fi;
