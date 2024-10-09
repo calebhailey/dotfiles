@@ -11,3 +11,5 @@ alias open-port="sudo iptables -A INPUT -p tcp -m tcp -j ACCEPT --dport"
 alias close-port="sudo iptables -D INPUT -p tcp -m tcp -j ACCEPT --dport"
 alias sqlite3="sqlite3 -column -header"
 alias assume="source assume"
+alias whatismyip="curl -s https://checkip.amazonaws.com"
+

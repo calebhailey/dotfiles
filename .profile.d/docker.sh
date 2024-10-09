@@ -1,6 +1,10 @@
 # Docker
 # 
-# installed via: https://docs.docker.com/desktop/install/mac-install/
+# install via: https://docs.docker.com/desktop/install/mac-install/
+#
+# alternatively, download docker-compose and docker-credential-* helpers from:
+# * https://github.com/docker/compose/releases
+# * https://github.com/docker/docker-credential-helpers/releases
 # 
 # docker remote API
 # https://success.docker.com/article/how-do-i-enable-the-remote-api-for-dockerd
