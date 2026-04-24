@@ -6,6 +6,13 @@ function uppercase() {
   tr '[:lower:]' '[:upper:]'
 }
 
+# recursive find & delete functions
+#
+# usage:
+#   findall *.db.* 
+findall() { find . -type f -name "$1"; }
+deleteall() { find . -type f -name "$1" -delete; }
+
 # container aliases
 alias workstation="podman run --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}:/home/me -it calebhailey/workstation:latest"
 
