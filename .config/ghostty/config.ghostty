@@ -1,0 +1,10 @@
+# copy the default config with:
+# ghostty +show-config --default --docs | pbcopy
+
+background = #000000
+background-opacity = 1
+clipboard-paste-protection = true
+link-url = true
+link-previews = true
+maximize = true
+font-size = 16
