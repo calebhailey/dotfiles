@@ -8,31 +8,57 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# load profile.d scripts
-if [ -d "${HOME}/.profile.d" ]; then
-    for FILE in "${HOME}/.profile.d/"*; do 
-        if [ -f "${FILE}" ]; then
-            echo "source \"$(basename ${FILE})\" added"
-            source ${FILE}
-        fi
-    done
-fi;
+# load path.d files
+load_user_paths() {
+    local file
+    local path
+    local user_paths=""
 
-# load profile.d/private scripts
-if [ -d "${HOME}/.profile.d/private" ]; then
-    for FILE in "${HOME}/.profile.d/private/"*; do 
-        if [ -f "${FILE}" ]; then
-            source ${FILE}
-        fi
-    done
-fi;
+    [ -d "${HOME}/.paths.d" ] || return
 
-# secrets
-if [ -d "${HOME}/.profile.d/secrets" ]; then
-    for FILE in "${HOME}/.profile.d/secrets/"*; do 
-        if [ -f "${FILE}" ]; then
-            source ${FILE}
-        fi
-    done
-fi;
+    for file in "${HOME}/.paths.d/"*; do
+        [ -f "$file" ] || continue
 
+        while IFS= read -r path || [ -n "$path" ]; do
+            [ -n "$path" ] || continue
+            [ "${path#\#}" = "$path" ] || continue
+
+            case "$path" in
+                "~/"*) path="${HOME}/${path#"~/"}" ;;
+            esac
+
+            [ -d "$path" ] || continue
+
+            case ":${user_paths}:${PATH}:" in
+                *":${path}:"*) continue ;;
+            esac
+
+            if [ -z "$user_paths" ]; then
+                user_paths="$path"
+            else
+                user_paths="${user_paths}:${path}"
+            fi
+        done < "$file"
+    done
+
+    [ -n "$user_paths" ] || return
+
+    PATH="${user_paths}:${PATH}"
+    export PATH
+}
+
+load_user_scripts() {
+    local file
+
+    [ -d "${HOME}/.profile.d" ] || return
+
+    for file in "${HOME}/.profile.d/"*; do
+        [ -f "$file" ] || continue
+        echo "source \"$(basename "$file")\" added"
+        source "$file"
+    done
+
+}
+
+load_user_paths
+load_user_scripts

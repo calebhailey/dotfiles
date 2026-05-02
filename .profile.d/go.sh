@@ -1,6 +1,4 @@
-# if Golang binaries are installed, add them to $PATH
-#
-# assumes ln -Ffs /usr/local/go/bin/go /usr/local/bin/go
+# Configure GOPATH and GOBIN (for tools install with go install)
 if [ -x "$(command -v go)" ]; then
     export GOPATH="${HOME}/.golang/"
     export GOBIN="${HOME}/.golang/bin"

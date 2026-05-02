@@ -1,97 +1,135 @@
 # Overview
 
-Nothing to see here, just attempting to keep my dotfiles in sync between systems. 
+Nothing to see here, just attempting to keep my dotfiles in sync between systems.
 
 ## Guide
 
-If you're curious how my dotfiles project works, here's how I set it up: 
+If you're curious how my dotfiles project works, here's how I set it up.
 
-1. **Init a [bare git repository][1]**. 
-   
-   ```
-   $ git init --bare $HOME/.dotfiles 
-   ```
+The basic idea is:
 
-2. **Create a `dotfiles` alias for managing your config files**. Since `git`  
-   expects a `.git` directory to know when a folder is being tracked, the 
-   normal `git` commands won't work for your dotfiles. 
-   
-   ```
-   $ git status
-   fatal: Not a git repository (or any of the parent directories): .git
-   ```
-   
-   So let's create an alias called `dotfiles`:
-   
-   ```
-   $ alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-   ```
-   
-   NOTE: You'll probably want to add your `dotfiles` alias to your aliases 
-   file. I'm old school and like using BASH, so I add mine to `.bash_aliases`,
-   if you're using a different shell you might need to put it elsewhere.
-   
-   ```
-   $ echo "alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'" >> $HOME/.bash_aliases
+- Store the Git directory at `$HOME/.dotfiles`
+- Use `$HOME` as the working tree
+- Create a `$HOME/.git` file that points Git at `$HOME/.dotfiles`
+
+This lets normal Git commands work from `$HOME` without needing a custom alias.
+
+## Initial setup
+
+1. **Initialize the dotfiles repository**.
+
+   ```sh
+   git init --bare "$HOME/.dotfiles"
    ```
 
-3. **Disable untracked files**. This is important, otherwise git will warn 
-   us about every file in our `$HOME` directory! Ain't nobody got time for 
-   that! 
-   
-   ```
-   $ dotfiles config --local status.showUntrackedFiles no
+2. **Tell Git that `$HOME` is the work tree**.
+
+   ```sh
+   git --git-dir="$HOME/.dotfiles" config core.bare false
+   git --git-dir="$HOME/.dotfiles" config core.worktree "$HOME"
    ```
 
-4. **Start tracking your dotfiles**! This is the fun part. 
-   
-   ```
-   $ dotfiles add .profile .bash_aliases
-   $ dotfiles commit -m 'initial commit'
+3. **Create a `.git` stub file**.
+
+   ```sh
+   printf 'gitdir: .dotfiles\n' > "$HOME/.git"
    ```
 
-That's it! Now just push your git repo somewhere for safe keeping any syncing 
-between machines! I would include instructions on adding a git remote, and 
-pushing to GitHub/GitLab, but I'll leave that as an exercise for the reader. 
+   The file should look like this:
 
-Happy dot-filing! 
+   ```text
+   gitdir: .dotfiles
+   ```
+
+   The path is relative to `$HOME/.git`, so this keeps the setup portable
+   across machines where `$HOME` may have a different absolute path.
+
+4. **Disable untracked files**.
+
+   This is important, otherwise Git will warn about every untracked file in
+   your home directory.
+
+   ```sh
+   git config --local status.showUntrackedFiles no
+   ```
+
+5. **Start tracking dotfiles**.
+
+   ```sh
+   git add .profile .bash_aliases
+   git commit -m 'initial commit'
+   ```
+
+That's it. Now normal Git commands work from `$HOME`:
+
+```sh
+git status
+git add .profile
+git commit -m 'update profile'
+git push
+```
 
 ## Setup a new machine
 
 1. Clone this repository:
 
-   ```
-   $ git clone --bare git@github.com:calebhailey/dotfiles.git $HOME/.dotfiles 
-   ```
-
-2. Configure the `dotfiles` alias:
-
-   ```
-   $ alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+   ```sh
+   git clone --bare git@github.com:calebhailey/dotfiles.git "$HOME/.dotfiles"
    ```
 
-3. Checkout a fresh copy of my dotfiles!
+2. Configure the repository:
 
+   ```sh
+   git --git-dir="$HOME/.dotfiles" config core.bare false
+   git --git-dir="$HOME/.dotfiles" config core.worktree "$HOME"
+   git --git-dir="$HOME/.dotfiles" config status.showUntrackedFiles no
    ```
-   $ dotfiles checkout
+
+3. Create the `.git` stub file:
+
+   ```sh
+   printf 'gitdir: .dotfiles\n' > "$HOME/.git"
    ```
 
-## Next 
+4. Checkout the dotfiles:
 
-It's been at least five years since I've attempted to keep my machines so 
-organized, so I'm just at the beginning of my journey here. Here's what's 
-next for me: 
+   ```sh
+   git checkout
+   ```
+
+If checkout fails because files already exist, move or remove the conflicting
+files, then run `git checkout` again.
+
+## Notes
+
+This setup started as a bare repository pattern, but after setting
+`core.bare false`, Git treats `$HOME/.dotfiles` as a normal Git directory stored
+outside the working tree.
+
+Be careful with destructive Git commands from `$HOME`:
+
+```sh
+git reset --hard
+git clean -fd
+```
+
+Those commands operate against your home directory.
+
+I do not track `$HOME/.git` itself. I treat it as generated machine-local state.
+
+## Next
+
+It's been at least five years since I've attempted to keep my machines so
+organized, so I'm just at the beginning of my journey here. Here's what's next
+for me:
 
 - Work on a fresh tmux config
 - Something something docker something
-- Track my sensuctl configs! 
+- Track my sensuctl configs
 
 ## References
 
-My setup is adapted from [this post on the Atlassian Developer blog][2]. 
-
-
-
+My original setup was adapted from [this post on the Atlassian Developer blog][2].
 
 [1]: https://git-scm.com/docs/git-init#git-init---bare
 [2]: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/

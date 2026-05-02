@@ -19,9 +19,7 @@
 # podman start registry
 export PODMAN_COMPOSE_PROVIDER=docker-compose
 export PODMAN_COMPOSE_WARNING_LOGS=0
-if [ -d "/opt/podman" ]; then
-    ln -Ffs /opt/podman ${HOME}/.podman 2> /dev/null
-    PATH="${HOME}/.podman/bin:${PATH}"
+if [ -x "$(command -v podman)" ]; then
     export KIND_EXPERIMENTAL_PROVIDER=podman
     PODMAN_MACHINE_NAME=podman-machine-default
     PODMAN_MACHINE_INSPECT=$(podman machine inspect "${PODMAN_MACHINE_NAME}" 2> /dev/null)
@@ -36,8 +34,8 @@ if [ -d "/opt/podman" ]; then
 fi;
 
 # Validate config
-ROOTLESS_EXPECTED=$(podman machine ssh printf "\$USER:1001:9001000" 2> /dev/null)
-ROOTLESS_ACTUAL=$(podman machine ssh cat /etc/subuid 2> /dev/null)
-if [ -n "${ROOTLESS_EXPECTED}" ] && [ -n "${ROOTLESS_ACTUAL}" ] && [ "${ROOTLESS_EXPECTED}" != "${ROOTLESS_ACTUAL}" ]; then
-    echo "warning: podman rootless config drift; see ~/.profile.d/podman.sh"
-fi;
+# ROOTLESS_EXPECTED=$(podman machine ssh printf "\$USER:1001:9001000" 2> /dev/null)
+# ROOTLESS_ACTUAL=$(podman machine ssh cat /etc/subuid 2> /dev/null)
+# if [ -n "${ROOTLESS_EXPECTED}" ] && [ -n "${ROOTLESS_ACTUAL}" ] && [ "${ROOTLESS_EXPECTED}" != "${ROOTLESS_ACTUAL}" ]; then
+#     echo "warning: podman rootless config drift; see ~/.profile.d/podman.sh"
+# fi;

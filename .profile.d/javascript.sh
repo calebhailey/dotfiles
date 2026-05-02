@@ -2,15 +2,32 @@
 # 
 # NodeJS, Deno, Bun, and future WinterCG runtimes? 🤞
 
+# NVM
+#
+# install nvm + nodejs with: 
+#
+#   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+#   source ${HOME}/.nvm/nvm.sh
+#   nvm install --lts
+#   nvm alias default 'lts/*'
+#   nvm use default
+export NVM_DIR="${HOME}/.nvm"
+if [ -f "${NVM_DIR}/nvm.sh" ]; then
+    source "${NVM_DIR}/nvm.sh"
+fi
+if [ -f "${NVM_DIR}/bash_completion" ]; then
+    source "${NVM_DIR}/bash_completion"
+fi
+
 # NodeJS + NPM 
 # 
-# installed via: https://nodejs.org/en/download/current
+# installed via: nvm install 25
 # config file: ${HOME}/.npmrc
 # 
 # add npm install -g location to PATH
-if [ -x "$(command -v npm)" ]; then
-    PATH="$(npm config get prefix)/bin:${PATH}"
-fi;
+# if [ -x "$(command -v npm)" ]; then
+#     PATH="$(npm config get prefix)/bin:${PATH}"
+# fi;
 
 # Deno
 # 
